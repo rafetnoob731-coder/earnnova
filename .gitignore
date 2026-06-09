@@ -1,0 +1,38 @@
+# Environment
+.env
+.env.local
+
+# Dependencies
+node_modules/
+vendor/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+build/
+
+# Cache
+.cache/
+tmp/
+
+# Supabase
+supabase/
+
+# Firebase
+firebase-debug.log
+
+# Uploads
+uploads/

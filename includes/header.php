@@ -14,7 +14,12 @@
     <meta name="application-name" content="EARNNOVA">
     <meta name="msapplication-TileColor" content="#4361ee">
     
-    <title><?= SITE_NAME ?> - <?= $pageTitle ?? 'Premium Earning Platform' ?></title>
+    <title><?= SITE_NAME ?> — <?= $pageTitle ?? 'Premium Earning Platform' ?></title>
+    
+    <!-- Google Fonts: Inter + Clash Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Favicon & PWA Icons -->
     <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
@@ -142,18 +147,26 @@
     <!-- Top Header -->
     <header class="top-header">
         <div class="header-left">
-            <button class="sidebar-toggle btn btn-secondary btn-sm" onclick="document.getElementById('sidebar').classList.toggle('open')">
+            <button class="sidebar-toggle btn btn-secondary btn-sm" onclick="document.getElementById('sidebar').classList.toggle('open')" style="border-radius:12px;padding:8px 12px;">
                 ☰
             </button>
-            <h3 style="font-size: 1.1rem; font-weight: 600;"><?= $pageTitle ?? 'Dashboard' ?></h3>
+            <h3 style="font-size: 1.1rem; font-weight: 700; font-family:'Inter',sans-serif;letter-spacing:-0.02em;"><?= $pageTitle ?? 'Dashboard' ?></h3>
+            <span id="liveClock" style="font-family:'SF Mono','SFMono-Regular',monospace;font-size:0.85rem;color:var(--current-text-muted);margin-left:8px;letter-spacing:0.02em;"></span>
         </div>
         <div class="header-right">
-            <span style="color: var(--current-text-secondary); font-size: 0.9rem;" data-balance>
+            <span style="font-family:'SF Mono','SFMono-Regular',monospace;font-size:0.9rem;font-weight:600;background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:0.02em;" data-balance>
                 $<?= number_format(getCurrentUser()['balance'] ?? 0, 2) ?>
             </span>
-            <button class="theme-toggle" title="Toggle theme">☀️</button>
+            <button class="btn btn-sm" style="position:relative;background:var(--glass-bg-2);border:1px solid var(--glass-border-2);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;cursor:pointer;" title="Notifications" onclick="EARNNOVA.showToast('Notifications','No new notifications','info')">
+                🔔
+                <span style="position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--neon-coral);border-radius:50%;border:2px solid var(--bg-dark);"></span>
+            </button>
+            <button class="theme-toggle" title="Toggle theme" style="border-radius:50%;width:40px;height:40px;font-size:1.1rem;">☀️</button>
             <a href="/profile.php" style="text-decoration: none; color: inherit;">
-                <span data-username style="font-weight: 600;"><?= htmlspecialchars(getCurrentUser()['username'] ?? 'User') ?></span>
+                <?php $cu = getCurrentUser(); ?>
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--gradient-primary);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:white;cursor:pointer;">
+                    <?= strtoupper(substr($cu['username'] ?? 'U', 0, 1)) ?>
+                </div>
             </a>
         </div>
     </header>
@@ -161,6 +174,16 @@
 
     <!-- Main Content Start -->
     <main class="main-content" style="<?= isset($showSidebar) && $showSidebar ? '' : 'margin-left:0; padding-top:24px;' ?>">
+    
+    <!-- Live clock script -->
+    <script>
+    function updateLiveClock() {
+        const el = document.getElementById('liveClock');
+        if (el) el.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+    }
+    setInterval(updateLiveClock, 10000);
+    document.addEventListener('DOMContentLoaded', updateLiveClock);
+    </script>
 
 <script>
 // Hide loading screen immediately

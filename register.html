@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a1a">
+<title>EARNNOVA — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+<link rel="manifest" href="/manifest.json">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cyber-cyan: #00F0FF;
+  --royal-violet: #7C3AED;
+  --neon-coral: #FF0066;
+  --mint-emerald: #00E5B2;
+  --gold: #FFB800;
+  --bg-dark: #0A0F1A;
+  --bg-card: rgba(255,255,255,0.04);
+  --border-glass: rgba(255,255,255,0.08);
+  --text: #ffffff;
+  --text-secondary: rgba(255,255,255,0.65);
+  --text-muted: rgba(255,255,255,0.35);
+}
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background */
+.bg-glow {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+}
+.bg-glow .orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.08;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.bg-glow .orb:nth-child(1) { width: 500px; height: 500px; background: var(--cyber-cyan); top: -10%; right: -5%; }
+.bg-glow .orb:nth-child(2) { width: 400px; height: 400px; background: var(--mint-emerald); bottom: -10%; left: -5%; animation-delay: -7s; }
+.bg-glow .orb:nth-child(3) { width: 300px; height: 300px; background: var(--royal-violet); top: 40%; left: 50%; animation-delay: -14s; }
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.08); }
+  66% { transform: translate(-30px,20px) scale(0.92); }
+}
+.particle-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(circle at 20% 30%, var(--cyber-cyan) 0px, transparent 1px),
+                    radial-gradient(circle at 80% 70%, var(--royal-violet) 0px, transparent 1px);
+  background-size: 60px 60px, 80px 80px;
+}
+
+/* Card */
+.register-card {
+  width: 100%;
+  max-width: 440px;
+  position: relative; z-index: 1;
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: 32px;
+  padding: 40px 36px;
+  box-shadow: 0 25px 60px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes cardIn { from { opacity: 0; transform: translateY(20px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* Logo */
+.logo {
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-weight: 900; color: #fff;
+  margin: 0 auto 16px;
+  box-shadow: 0 10px 28px rgba(0,240,255,0.25);
+}
+
+/* Typography */
+.heading { text-align: center; margin-bottom: 28px; }
+.heading h1 {
+  font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 4px;
+}
+.heading p { color: var(--text-secondary); font-size: 0.9rem; }
+
+/* Steps */
+.steps {
+  display: flex; align-items: center; justify-content: center;
+  gap: 0; margin-bottom: 28px;
+}
+.step {
+  display: flex; align-items: center; gap: 8px;
+}
+.step-circle {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700;
+  border: 2px solid var(--border-glass);
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+.step.active .step-circle {
+  border-color: var(--cyber-cyan);
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  color: #fff;
+  box-shadow: 0 0 20px rgba(0,240,255,0.3);
+}
+.step.completed .step-circle {
+  border-color: var(--mint-emerald);
+  background: var(--mint-emerald);
+  color: #fff;
+}
+.step-label {
+  font-size: 0.75rem; color: var(--text-muted);
+  display: none;
+}
+.step.active .step-label { display: block; color: var(--text-secondary); }
+.step-line {
+  width: 32px; height: 2px;
+  background: var(--border-glass);
+  margin: 0 4px;
+}
+.step-line.active { background: var(--cyber-cyan); }
+
+/* Form */
+.form-group { margin-bottom: 18px; }
+.form-group label {
+  display: block; font-size: 0.82rem; font-weight: 500;
+  color: var(--text-secondary); margin-bottom: 6px;
+}
+.input-wrap { position: relative; }
+.input-wrap .icon {
+  position: absolute; left: 14px; top: 50%;
+  transform: translateY(-50%); font-size: 1rem;
+  pointer-events: none; opacity: 0.5;
+}
+.input-wrap input, .input-wrap select {
+  width: 100%; padding: 14px 14px 14px 44px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 14px;
+  color: var(--text); font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  outline: none; transition: all 0.3s ease;
+}
+.input-wrap select { appearance: none; padding-right: 32px; cursor: pointer; }
+.input-wrap select option { background: #1a1f2e; color: var(--text); }
+.input-wrap input:focus, .input-wrap select:focus {
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 0 3px rgba(0,240,255,0.1);
+  background: rgba(255,255,255,0.07);
+}
+.input-wrap input::placeholder { color: var(--text-muted); opacity: 0.5; }
+.input-wrap .strength-bar {
+  height: 3px; border-radius: 2px;
+  margin-top: 6px; background: rgba(255,255,255,0.05);
+  overflow: hidden; transition: all 0.3s;
+}
+.input-wrap .strength-bar .fill {
+  height: 100%; width: 0%; border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* Button */
+.btn-primary {
+  width: 100%; padding: 15px; border: none;
+  border-radius: 40px; font-size: 1rem; font-weight: 700;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  color: #fff; position: relative; overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 8px 24px rgba(0,240,255,0.25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,240,255,0.35); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-secondary {
+  width: 100%; padding: 15px; border: 1px solid var(--border-glass);
+  border-radius: 40px; font-size: 1rem; font-weight: 600;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  background: rgba(255,255,255,0.04);
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.08); }
+.btn-primary .spinner, .btn-secondary .spinner {
+  display: none; width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.6s linear infinite; margin: 0 auto;
+}
+.btn-primary.loading .spinner, .btn-secondary.loading .spinner { display: block; }
+.btn-primary.loading .btn-text, .btn-secondary.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Terms */
+.terms {
+  display: flex; align-items: flex-start; gap: 8px;
+  margin: 16px 0; font-size: 0.82rem; color: var(--text-muted);
+}
+.terms input[type="checkbox"] {
+  width: 16px; height: 16px; accent-color: var(--cyber-cyan);
+  margin-top: 2px; cursor: pointer; flex-shrink: 0;
+}
+.terms a { color: var(--cyber-cyan); text-decoration: none; }
+.terms a:hover { text-decoration: underline; }
+
+/* Divider */
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 20px 0; color: var(--text-muted); font-size: 0.82rem;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border-glass);
+}
+
+/* Social */
+.social-row { display: flex; gap: 10px; margin-bottom: 16px; }
+.social-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 12px; border-radius: 14px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255,255,255,0.04);
+  color: var(--text); font-size: 0.85rem; font-weight: 500;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all 0.2s ease;
+}
+.social-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+.social-btn .sicon { font-size: 1.2rem; }
+
+/* Login link */
+.login-link { text-align: center; margin-top: 12px; }
+.login-link a {
+  color: var(--cyber-cyan); text-decoration: none;
+  font-weight: 600; font-size: 0.95rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: gap 0.3s;
+}
+.login-link a:hover { gap: 10px; }
+
+/* OTP step */
+.otp-boxes {
+  display: flex; gap: 10px; justify-content: center; margin: 24px 0;
+}
+.otp-box {
+  width: 48px; height: 56px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  text-align: center; font-size: 1.4rem; font-weight: 700;
+  color: var(--text); outline: none;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.2s ease;
+}
+.otp-box:focus {
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 0 3px rgba(0,240,255,0.1);
+}
+.resend {
+  text-align: center; font-size: 0.85rem; margin: 16px 0;
+  color: var(--text-muted);
+}
+.resend a { color: var(--cyber-cyan); text-decoration: none; cursor: pointer; }
+.resend a:disabled, .resend .countdown { color: var(--text-muted); cursor: default; }
+
+/* Welcome step */
+.confetti-canvas {
+  position: fixed; inset: 0; pointer-events: none; z-index: 99;
+}
+.welcome-icon {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: var(--mint-emerald);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; margin: 0 auto 16px;
+  box-shadow: 0 0 40px rgba(0,229,178,0.3);
+  animation: welcomePop 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes welcomePop { from { transform: scale(0); } to { transform: scale(1); } }
+.bonus-card {
+  background: rgba(0,229,178,0.08);
+  border: 1px solid rgba(0,229,178,0.2);
+  border-radius: 16px; padding: 16px; margin: 16px 0;
+  text-align: center;
+}
+.bonus-card .bonus-amount { font-size: 1.6rem; font-weight: 800; color: var(--mint-emerald); }
+.bonus-card .bonus-label { font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px; }
+
+/* Avatars */
+.avatar-grid {
+  display: flex; gap: 12px; justify-content: center; margin: 16px 0;
+}
+.avatar-opt {
+  width: 52px; height: 52px; border-radius: 50%;
+  border: 2px solid var(--border-glass);
+  cursor: pointer; transition: all 0.2s ease;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; background: rgba(255,255,255,0.05);
+}
+.avatar-opt:hover { transform: scale(1.1); border-color: var(--cyber-cyan); }
+.avatar-opt.selected { border-color: var(--cyber-cyan); box-shadow: 0 0 16px rgba(0,240,255,0.3); }
+
+/* Interests */
+.chip-grid {
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+  margin: 12px 0;
+}
+.chip {
+  padding: 8px 16px; border-radius: 20px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-secondary); font-size: 0.85rem;
+  cursor: pointer; transition: all 0.2s ease;
+  font-family: 'Inter', sans-serif;
+}
+.chip:hover { border-color: var(--cyber-cyan); color: var(--text); }
+.chip.selected { background: rgba(0,240,255,0.1); border-color: var(--cyber-cyan); color: var(--cyber-cyan); }
+
+/* Steps container */
+.step-content { display: none; }
+.step-content.active { display: block; }
+
+/* Toast */
+.toast-container {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%); z-index: 9999;
+  display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px; padding: 14px 20px;
+  color: var(--text); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  pointer-events: auto;
+  max-width: 380px;
+}
+.toast.hide { animation: toastOut 0.3s ease both; }
+.toast.success { border-color: rgba(0,229,178,0.3); }
+.toast.error { border-color: rgba(255,0,102,0.3); }
+@keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(0.9); } }
+@keyframes toastOut { to { opacity: 0; transform: translateY(-10px); } }
+
+/* Error */
+.error-msg {
+  background: rgba(255,0,102,0.1);
+  border: 1px solid rgba(255,0,102,0.2);
+  border-radius: 14px; padding: 12px 16px; margin-bottom: 16px;
+  color: var(--neon-coral); font-size: 0.9rem;
+  display: none; align-items: center; gap: 10px;
+}
+.error-msg.show { display: flex; }
+
+@media (max-width: 480px) {
+  .register-card { padding: 32px 20px; border-radius: 24px; }
+  .otp-box { width: 42px; height: 50px; font-size: 1.2rem; }
+  .step { gap: 4px; }
+  .step-line { width: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+<div class="particle-grid"></div>
+
+<canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+
+<div class="register-card">
+  <div class="logo">E</div>
+
+  <div class="heading">
+    <h1 id="headingTitle">Create Account</h1>
+    <p id="headingSub">Join EARNNOVA and start earning today</p>
+  </div>
+
+  <div class="steps">
+    <div class="step active" id="step1Indicator">
+      <div class="step-circle">1</div>
+      <span class="step-label">Account</span>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="step2Indicator">
+      <div class="step-circle">2</div>
+      <span class="step-label">Verify</span>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="step3Indicator">
+      <div class="step-circle">3</div>
+      <span class="step-label">Done</span>
+    </div>
+  </div>
+
+  <div class="error-msg" id="errorMsg">
+    <span>❌</span>
+    <span id="errorText">Error occurred</span>
+  </div>
+
+  <!-- ===== STEP 1: Account Setup ===== -->
+  <div class="step-content active" id="step1">
+    <form id="step1Form" onsubmit="goStep2(event)">
+      <div class="form-group">
+        <label for="fullname">Full Name</label>
+        <div class="input-wrap">
+          <span class="icon">👤</span>
+          <input type="text" id="fullname" placeholder="John Doe" required autocomplete="name" oninput="this.value=this.value.replace(/^[a-z]/g,c=>c.toUpperCase())">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="regEmail">Email Address</label>
+        <div class="input-wrap">
+          <span class="icon">✉️</span>
+          <input type="email" id="regEmail" placeholder="your@email.com" required autocomplete="email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <span class="icon">🔒</span>
+          <input type="password" id="regPassword" placeholder="Create a strong password" required oninput="updateStrength()">
+          <div class="strength-bar"><div class="fill" id="strengthFill"></div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px;font-size:0.7rem;color:var(--text-muted);">
+          <span id="strengthLabel">Weak</span>
+          <span>Must be 8+ characters</span>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="referral">Referral Code (optional)</label>
+        <div style="display:flex;gap:8px;">
+          <div class="input-wrap" style="flex:1;">
+            <span class="icon">🔗</span>
+            <input type="text" id="referral" placeholder="Enter code" style="padding-left:44px;">
+          </div>
+          <button type="button" class="btn-secondary" style="width:auto;padding:12px 20px;border-radius:14px;font-size:0.85rem;white-space:nowrap;" onclick="applyReferral()">Apply</button>
+        </div>
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="#">Terms of Service</a> &amp; <a href="#">Privacy Policy</a></label>
+      </div>
+
+      <button type="submit" class="btn-primary" id="step1Btn">
+        <span class="btn-text">Continue →</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+  </div>
+
+  <!-- ===== STEP 2: Verification ===== -->
+  <div class="step-content" id="step2">
+    <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:24px;">Enter the 6-digit code sent to<br><strong id="otpTarget" style="color:var(--text);">your@email.com</strong></p>
+
+    <div class="otp-boxes" id="otpBoxes">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autofocus oninput="otpNext(this)">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="otpNext(this)">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="otpNext(this)">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="otpNext(this)">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="otpNext(this)">
+      <input class="otp-box" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="otpNext(this)">
+    </div>
+
+    <div class="resend">
+      <span id="resendTimer">Resend code in <strong id="countdown">60</strong>s</span>
+      <a id="resendLink" style="display:none;" onclick="startResend()">Resend code</a>
+    </div>
+
+    <div style="display:flex;gap:10px;">
+      <button class="btn-secondary" onclick="backToStep1()" style="width:auto;padding:15px 24px;">← Back</button>
+      <button class="btn-primary" id="verifyBtn" onclick="verifyOTP()" style="flex:1;">
+        <span class="btn-text">Verify →</span>
+        <span class="spinner"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===== STEP 3: Welcome ===== -->
+  <div class="step-content" id="step3" style="text-align:center;">
+    <div class="welcome-icon">✓</div>
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;" id="welcomeName">Welcome, User!</h2>
+    <p style="color:var(--text-secondary);font-size:0.9rem;">Your account is ready</p>
+
+    <div class="bonus-card">
+      <div class="bonus-amount">$5.00</div>
+      <div class="bonus-label">🎉 Welcome Bonus Claimed!</div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:12px 0 8px;">Choose your avatar</p>
+    <div class="avatar-grid">
+      <div class="avatar-opt selected" onclick="selectAvatar(this)">😎</div>
+      <div class="avatar-opt" onclick="selectAvatar(this)">🚀</div>
+      <div class="avatar-opt" onclick="selectAvatar(this)">🦸</div>
+      <div class="avatar-opt" onclick="selectAvatar(this)">🐱</div>
+      <div class="avatar-opt" onclick="selectAvatar(this)">🦊</div>
+      <div class="avatar-opt" onclick="selectAvatar(this)">👑</div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin:8px 0;">Interests (pick what you like)</p>
+    <div class="chip-grid">
+      <span class="chip selected" onclick="toggleChip(this)">💰 Crypto</span>
+      <span class="chip" onclick="toggleChip(this)">🎮 Gaming</span>
+      <span class="chip" onclick="toggleChip(this)">💼 Freelancing</span>
+      <span class="chip" onclick="toggleChip(this)">📈 Investing</span>
+    </div>
+
+    <a href="/dashboard.php" class="btn-primary" id="dashboardBtn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 32px;margin-top:16px;text-decoration:none;">
+      <span>🚀 Go to Dashboard</span>
+    </a>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// ===== STEP MANAGEMENT =====
+let currentStep = 1;
+let registrationData = {};
+
+function showStep(n) {
+  document.querySelectorAll('.step-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  
+  document.querySelectorAll('.steps .step').forEach(el => el.classList.remove('active', 'completed'));
+  for (let i = 1; i < n; i++) {
+    document.getElementById('step' + i + 'Indicator').classList.add('completed');
+    document.getElementById('line' + i)?.classList.add('active');
+  }
+  document.getElementById('step' + n + 'Indicator').classList.add('active');
+  
+  currentStep = n;
+  document.getElementById('headingTitle').textContent = 
+    n === 1 ? 'Create Account' : n === 2 ? 'Verify Identity' : 'Welcome!';
+  document.getElementById('headingSub').textContent = 
+    n === 1 ? 'Join EARNNOVA and start earning today' : n === 2 ? 'Enter the verification code' : 'You\'re all set!';
+}
+
+// ===== STEP 1 → STEP 2 =====
+async function goStep2(e) {
+  e.preventDefault();
+  const btn = document.getElementById('step1Btn');
+  const errorMsg = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+  
+  const fullname = document.getElementById('fullname').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const terms = document.getElementById('terms').checked;
+  
+  errorMsg.classList.remove('show');
+  
+  if (!fullname || !email || !password) {
+    errorText.textContent = 'Please fill in all required fields';
+    errorMsg.classList.add('show'); return;
+  }
+  if (password.length < 8) {
+    errorText.textContent = 'Password must be at least 8 characters';
+    errorMsg.classList.add('show'); return;
+  }
+  if (!terms) {
+    errorText.textContent = 'Please accept the Terms of Service';
+    errorMsg.classList.add('show'); return;
+  }
+  
+  btn.classList.add('loading');
+  
+  try {
+    const res = await fetch('/api/auth.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'register', email, password, username: fullname })
+    });
+    const data = await res.json();
+    
+    if (data.success) {
+      registrationData = { fullname, email };
+      document.getElementById('otpTarget').textContent = email;
+      showStep(2);
+      startResendTimer();
+    } else {
+      errorText.textContent = data.message || 'Registration failed';
+      errorMsg.classList.add('show');
+    }
+  } catch(err) {
+    errorText.textContent = 'Network error. Please try again.';
+    errorMsg.classList.add('show');
+  }
+  
+  btn.classList.remove('loading');
+}
+
+function backToStep1() { showStep(1); }
+
+// ===== PASSWORD STRENGTH =====
+function updateStrength() {
+  const pwd = document.getElementById('regPassword').value;
+  const fill = document.getElementById('strengthFill');
+  const label = document.getElementById('strengthLabel');
+  
+  let score = 0;
+  if (pwd.length >= 8) score += 25;
+  if (pwd.match(/[a-z]/) && pwd.match(/[A-Z]/)) score += 25;
+  if (pwd.match(/\d/)) score += 25;
+  if (pwd.match(/[^a-zA-Z0-9]/)) score += 25;
+  
+  fill.style.width = score + '%';
+  if (score <= 25) { fill.style.background = '#FF0066'; label.textContent = 'Weak'; }
+  else if (score <= 50) { fill.style.background = '#FF8C00'; label.textContent = 'Fair'; }
+  else if (score <= 75) { fill.style.background = '#FFD700'; label.textContent = 'Good'; }
+  else { fill.style.background = '#00E5B2'; label.textContent = 'Strong'; }
+}
+
+// ===== OTP =====
+function otpNext(el) {
+  if (el.value) {
+    const next = el.nextElementSibling;
+    if (next) next.focus();
+    // Auto submit when all filled
+    const all = document.querySelectorAll('.otp-box');
+    const filled = Array.from(all).every(i => i.value);
+    if (filled) verifyOTP();
+  }
+}
+function startResendTimer() {
+  let sec = 60;
+  const timer = document.getElementById('countdown');
+  const resendLink = document.getElementById('resendLink');
+  const resendTimer = document.getElementById('resendTimer');
+  resendLink.style.display = 'none';
+  resendTimer.style.display = 'inline';
+  const iv = setInterval(() => {
+    sec--;
+    timer.textContent = sec;
+    if (sec <= 0) {
+      clearInterval(iv);
+      resendLink.style.display = 'inline';
+      resendTimer.style.display = 'none';
+    }
+  }, 1000);
+}
+function startResend() {
+  startResendTimer();
+  showToast('✅ Code resent to your email', 'success');
+}
+async function verifyOTP() {
+  const boxes = document.querySelectorAll('.otp-box');
+  const code = Array.from(boxes).map(b => b.value).join('');
+  if (code.length < 6) { showToast('Please enter the full 6-digit code', 'error'); return; }
+  
+  const btn = document.getElementById('verifyBtn');
+  btn.classList.add('loading');
+  
+  // Simulate OTP verification (in production, verify against backend)
+  await new Promise(r => setTimeout(r, 800));
+  
+  btn.classList.remove('loading');
+  showStep(3);
+  document.getElementById('welcomeName').textContent = 'Welcome, ' + (registrationData.fullname || 'User') + '!';
+  fireConfetti();
+}
+
+// ===== CONFETTI =====
+function fireConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const colors = ['#00F0FF', '#7C3AED', '#FF0066', '#00E5B2', '#FFD700'];
+  const pieces = [];
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height * -1,
+      w: Math.random() * 8 + 4,
+      h: Math.random() * 6 + 3,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: Math.random() * 4 - 2,
+      vy: Math.random() * 3 + 2,
+      rot: Math.random() * 360,
+      rv: Math.random() * 6 - 3
+    });
+  }
+  let frames = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rv;
+      p.vy += 0.03;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frames++;
+    if (frames < 120) requestAnimationFrame(draw);
+    else { ctx.clearRect(0,0,canvas.width,canvas.height); canvas.width = 0; canvas.height = 0; }
+  }
+  draw();
+}
+
+// ===== AVATAR & CHIPS =====
+function selectAvatar(el) {
+  document.querySelectorAll('.avatar-opt').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function toggleChip(el) {
+  el.classList.toggle('selected');
+}
+function applyReferral() {
+  showToast('✅ Referral code applied!', 'success');
+}
+
+// ===== TOAST =====
+function showToast(msg, type) {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type === 'error' ? ' error' : ' success');
+  t.innerHTML = `<span>${type === 'error' ? '❌' : '✅'}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('hide');
+    setTimeout(() => t.remove(), 400);
+  }, 3500);
+}
+
+// ===== CHECK SESSION =====
+fetch('/api/auth.php?action=check_session')
+  .then(r => r.json())
+  .then(d => { if (d.success && d.data?.logged_in) window.location.href = '/dashboard.php'; })
+  .catch(() => {});
+</script>
+
+</body>
+</html>

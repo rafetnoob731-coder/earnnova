@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a1a">
+<meta name="csrf-token" content="">
+<title>EARNNOVA — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192x192.png">
+<link rel="manifest" href="/manifest.json">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --cyber-cyan: #00F0FF;
+  --royal-violet: #7C3AED;
+  --neon-coral: #FF0066;
+  --mint-emerald: #00E5B2;
+  --gold: #FFB800;
+  --bg-dark: #0A0F1A;
+  --bg-card: rgba(255,255,255,0.04);
+  --border-glass: rgba(255,255,255,0.08);
+  --text: #ffffff;
+  --text-secondary: rgba(255,255,255,0.65);
+  --text-muted: rgba(255,255,255,0.35);
+}
+html, body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background */
+.bg-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-glow .orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.08;
+  animation: orbFloat 20s ease-in-out infinite;
+}
+.bg-glow .orb:nth-child(1) { width: 500px; height: 500px; background: var(--cyber-cyan); top: -10%; right: -5%; }
+.bg-glow .orb:nth-child(2) { width: 400px; height: 400px; background: var(--neon-coral); bottom: -10%; left: -5%; animation-delay: -7s; }
+.bg-glow .orb:nth-child(3) { width: 300px; height: 300px; background: var(--royal-violet); top: 40%; left: 50%; animation-delay: -14s; }
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.08); }
+  66% { transform: translate(-30px,20px) scale(0.92); }
+}
+.particle-grid {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  opacity: 0.03;
+  background-image: radial-gradient(circle at 20% 30%, var(--cyber-cyan) 0px, transparent 1px),
+                    radial-gradient(circle at 80% 70%, var(--royal-violet) 0px, transparent 1px);
+  background-size: 60px 60px, 80px 80px;
+}
+
+/* Card */
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  z-index: 1;
+  background: var(--bg-card);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: 32px;
+  padding: 48px 40px;
+  box-shadow: 0 25px 60px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  animation: cardIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes cardIn { from { opacity: 0; transform: translateY(20px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* Logo */
+.logo {
+  width: 60px; height: 60px;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  border-radius: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; font-weight: 900; color: #fff;
+  margin: 0 auto 20px;
+  box-shadow: 0 12px 32px rgba(0,240,255,0.25);
+}
+
+/* Typography */
+.heading { text-align: center; margin-bottom: 32px; }
+.heading h1 {
+  font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+.heading p { color: var(--text-secondary); font-size: 0.95rem; }
+
+/* Form */
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block; font-size: 0.85rem; font-weight: 500;
+  color: var(--text-secondary); margin-bottom: 8px;
+}
+.input-wrap { position: relative; }
+.input-wrap .icon {
+  position: absolute; left: 16px; top: 50%;
+  transform: translateY(-50%); font-size: 1.1rem;
+  pointer-events: none; opacity: 0.5;
+}
+.input-wrap input {
+  width: 100%; padding: 16px 16px 16px 48px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  color: var(--text); font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  outline: none; transition: all 0.3s ease;
+}
+.input-wrap input:focus {
+  border-color: var(--cyber-cyan);
+  box-shadow: 0 0 0 3px rgba(0,240,255,0.1);
+  background: rgba(255,255,255,0.07);
+}
+.input-wrap input::placeholder { color: var(--text-muted); opacity: 0.5; }
+.input-wrap .toggle-pass {
+  position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  background: none; border: none;
+  font-size: 1.1rem; cursor: pointer;
+  padding: 8px; opacity: 0.5; transition: opacity 0.2s;
+  color: var(--text);
+}
+.input-wrap .toggle-pass:hover { opacity: 1; }
+
+/* Options */
+.options {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 24px; gap: 12px;
+}
+.options label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.9rem; color: var(--text-secondary); cursor: pointer;
+}
+.options input[type="checkbox"] {
+  width: 18px; height: 18px; accent-color: var(--cyber-cyan);
+  border-radius: 4px; cursor: pointer;
+}
+.options a {
+  color: var(--cyber-cyan); text-decoration: none;
+  font-size: 0.9rem; font-weight: 500; white-space: nowrap;
+}
+.options a:hover { text-decoration: underline; }
+
+/* Button */
+.btn-primary {
+  width: 100%; padding: 16px; border: none;
+  border-radius: 40px; font-size: 1rem; font-weight: 700;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  background: linear-gradient(135deg, var(--cyber-cyan), var(--royal-violet));
+  color: #fff; position: relative; overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 8px 24px rgba(0,240,255,0.25);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,240,255,0.35); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.btn-primary .spinner {
+  display: none; width: 20px; height: 20px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff; border-radius: 50%;
+  animation: spin 0.6s linear infinite; margin: 0 auto;
+}
+.btn-primary.loading .spinner { display: block; }
+.btn-primary.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Divider */
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0; color: var(--text-muted); font-size: 0.85rem;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border-glass);
+}
+
+/* Social */
+.social-row { display: flex; gap: 12px; margin-bottom: 24px; }
+.social-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  gap: 8px; padding: 14px; border-radius: 16px;
+  border: 1px solid var(--border-glass);
+  background: rgba(255,255,255,0.04);
+  color: var(--text); font-size: 0.9rem; font-weight: 500;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all 0.2s ease; text-decoration: none;
+}
+.social-btn:hover { background: rgba(255,255,255,0.08); transform: translateY(-1px); }
+.social-btn.google { border-color: rgba(66,133,244,0.2); }
+.social-btn.telegram { border-color: rgba(0,136,204,0.2); }
+.social-btn .sicon { font-size: 1.3rem; }
+
+/* Register link */
+.register-link {
+  text-align: center; margin-top: 8px;
+}
+.register-link a {
+  color: var(--cyber-cyan); text-decoration: none;
+  font-weight: 600; font-size: 0.95rem;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: gap 0.3s;
+}
+.register-link a:hover { gap: 10px; }
+.register-link a .arrow { transition: transform 0.3s; }
+.register-link a:hover .arrow { transform: translateX(4px); }
+
+/* Security note */
+.security-note {
+  text-align: center; margin-top: 20px;
+  font-size: 0.8rem; color: var(--text-muted); opacity: 0.6;
+}
+
+/* Error toast */
+.error-msg {
+  background: rgba(255,0,102,0.1);
+  border: 1px solid rgba(255,0,102,0.2);
+  border-radius: 14px; padding: 12px 16px; margin-bottom: 20px;
+  color: var(--neon-coral); font-size: 0.9rem;
+  display: none; align-items: center; gap: 10px;
+}
+.error-msg.show { display: flex; }
+
+/* Toast container */
+.toast-container {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%); z-index: 9999;
+  display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px; padding: 14px 20px;
+  color: var(--text); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+  animation: toastIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+  pointer-events: auto;
+  max-width: 380px;
+}
+.toast.hide { animation: toastOut 0.3s ease both; }
+.toast.success { border-color: rgba(0,229,178,0.3); }
+.toast.error { border-color: rgba(255,0,102,0.3); }
+@keyframes toastIn { from { opacity: 0; transform: translateY(20px) scale(0.9); } }
+@keyframes toastOut { to { opacity: 0; transform: translateY(-10px); } }
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9998;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  width: 100%; max-width: 420px;
+  background: rgba(20,25,40,0.95);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border-glass);
+  border-radius: 32px; padding: 32px;
+  animation: toastIn 0.3s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+}
+.modal-header h2 { font-size: 1.3rem; font-weight: 700; }
+.modal-close {
+  background: none; border: none; color: var(--text-muted);
+  font-size: 1.3rem; cursor: pointer; padding: 4px 8px;
+  border-radius: 8px; transition: all 0.2s;
+}
+.modal-close:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+.modal p { color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-card { padding: 36px 24px; border-radius: 24px; margin: 0 8px; }
+  .social-row { flex-direction: column; }
+  .heading h1 { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="bg-glow">
+  <div class="orb"></div>
+  <div class="orb"></div>
+  <div class="orb"></div>
+</div>
+<div class="particle-grid"></div>
+
+<div class="login-card">
+  <div class="logo">E</div>
+
+  <div class="heading">
+    <h1>Welcome Back</h1>
+    <p>Sign in to your EARNNOVA account</p>
+  </div>
+
+  <div class="error-msg" id="errorMsg">
+    <span>❌</span>
+    <span id="errorText">Invalid credentials</span>
+  </div>
+
+  <form id="loginForm" onsubmit="handleLogin(event)">
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <div class="input-wrap">
+        <span class="icon">✉️</span>
+        <input type="email" id="email" placeholder="your@email.com" required autocomplete="email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-wrap">
+        <span class="icon">🔒</span>
+        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+        <button type="button" class="toggle-pass" id="passToggle" onclick="togglePass()" aria-label="Toggle password visibility">👁️</button>
+      </div>
+    </div>
+
+    <div class="options">
+      <label><input type="checkbox" id="remember"> Remember me for 30 days</label>
+      <a href="#" onclick="showForgot(event)">Forgot Password?</a>
+    </div>
+
+    <button type="submit" class="btn-primary" id="loginBtn">
+      <span class="btn-text">Sign In →</span>
+      <span class="spinner"></span>
+    </button>
+  </form>
+
+  <div class="divider">Or continue with</div>
+
+  <div class="social-row">
+    <button class="social-btn google" onclick="showToast('Google login coming soon!')">
+      <span class="sicon" style="font-weight:700;background:conic-gradient(from 0deg,#4285f4,#34a853,#fbbc05,#ea4335);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">G</span> Google
+    </button>
+    <button class="social-btn telegram" onclick="showToast('Telegram login coming soon!')">
+      <span class="sicon">✈️</span> Telegram
+    </button>
+  </div>
+
+  <div class="register-link">
+    <a href="/register.html">
+      New to EARNNOVA? <strong>Create account</strong>
+      <span class="arrow">→</span>
+    </a>
+  </div>
+
+  <div class="security-note">🔒 Secured by SSL encryption • 2FA available</div>
+</div>
+
+<div class="modal-overlay" id="forgotModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>🔑 Reset Password</h2>
+      <button class="modal-close" onclick="closeForgot()">✕</button>
+    </div>
+    <p>Enter your email and we'll send you a reset link.</p>
+    <div class="form-group">
+      <label for="resetEmail">Email Address</label>
+      <div class="input-wrap">
+        <span class="icon">✉️</span>
+        <input type="email" id="resetEmail" placeholder="your@email.com">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="sendReset()">Send Reset Link</button>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+// --- Password toggle ---
+function togglePass() {
+  const pwd = document.getElementById('password');
+  const btn = document.getElementById('passToggle');
+  if (pwd.type === 'password') { pwd.type = 'text'; btn.textContent = '🙈'; }
+  else { pwd.type = 'password'; btn.textContent = '👁️'; }
+}
+
+// --- Login handler ---
+async function handleLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const errorText = document.getElementById('errorText');
+
+  btn.classList.add('loading');
+  errorMsg.classList.remove('show');
+
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('/api/auth.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'login', email, password })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      showToast('✅ Login successful! Redirecting...', 'success');
+      setTimeout(() => { window.location.href = '/dashboard.php'; }, 600);
+    } else {
+      errorText.textContent = data.message || 'Invalid email or password';
+      errorMsg.classList.add('show');
+      btn.classList.remove('loading');
+    }
+  } catch (err) {
+    errorText.textContent = 'Network error. Please try again.';
+    errorMsg.classList.add('show');
+    btn.classList.remove('loading');
+  }
+}
+
+// --- Forgot password modal ---
+function showForgot(e) {
+  e.preventDefault();
+  document.getElementById('forgotModal').classList.add('active');
+}
+function closeForgot() {
+  document.getElementById('forgotModal').classList.remove('active');
+}
+async function sendReset() {
+  const email = document.getElementById('resetEmail').value.trim();
+  if (!email) { showToast('Please enter your email', 'error'); return; }
+  try {
+    const res = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=<?php // placeholder - replace with actual key ?>', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ requestType: 'PASSWORD_RESET', email })
+    });
+    const data = await res.json();
+    if (data.error) showToast(data.error.message || 'Failed', 'error');
+    else { showToast('✅ Reset link sent!'); closeForgot(); document.getElementById('resetEmail').value = ''; }
+  } catch(err) {
+    showToast('Network error', 'error');
+  }
+}
+
+// --- Toast system ---
+function showToast(msg, type) {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type === 'error' ? ' error' : ' success');
+  t.innerHTML = `<span>${type === 'error' ? '❌' : '✅'}</span><span>${msg}</span>`;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.classList.add('hide');
+    setTimeout(() => t.remove(), 400);
+  }, 3500);
+}
+
+// --- Close modal on overlay click ---
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active');
+});
+
+// --- Check if already logged in ---
+fetch('/api/auth.php?action=check_session')
+  .then(r => r.json())
+  .then(d => { if (d.success && d.data?.logged_in) window.location.href = '/dashboard.php'; })
+  .catch(() => {});
+</script>
+
+</body>
+</html>

@@ -4,15 +4,15 @@
   "builds": [
     {
       "src": "/*.php",
-      "use": "@xigen/vercel-php"
+      "use": "vercel-php"
     },
     {
       "src": "api/**/*.php",
-      "use": "@xigen/vercel-php"
+      "use": "vercel-php"
     },
     {
       "src": "admin/**/*.php",
-      "use": "@xigen/vercel-php"
+      "use": "vercel-php"
     },
     {
       "src": "assets/**/*",
@@ -24,10 +24,6 @@
     },
     {
       "src": "manifest.json",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "composer.json",
       "use": "@vercel/static"
     }
   ],

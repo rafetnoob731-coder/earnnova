@@ -4,15 +4,15 @@
   "builds": [
     {
       "src": "/*.php",
-      "use": "@vercel/php"
+      "use": "@xigen/vercel-php"
     },
     {
       "src": "api/**/*.php",
-      "use": "@vercel/php"
+      "use": "@xigen/vercel-php"
     },
     {
       "src": "admin/**/*.php",
-      "use": "@vercel/php"
+      "use": "@xigen/vercel-php"
     },
     {
       "src": "assets/**/*",
@@ -25,6 +25,10 @@
     {
       "src": "manifest.json",
       "use": "@vercel/static"
+    },
+    {
+      "src": "composer.json",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -33,7 +37,6 @@
     { "src": "/admin/(.*)", "dest": "/admin/$1" },
     { "src": "/sw.js", "dest": "/sw.js" },
     { "src": "/manifest.json", "dest": "/manifest.json" },
-    { "src": "/(.*)\\.php", "dest": "/$1.php" },
     { "src": "/(.*)", "dest": "/$1.php" }
   ],
   "headers": [

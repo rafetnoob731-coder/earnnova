@@ -1,0 +1,24 @@
+{
+  "name": "earnnova",
+  "version": "1.0.0",
+  "description": "\ud83d\ude80 **Earn money by watching ads, completing tasks, and referring friends.**",
+  "main": "sw.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafetnoob731-coder/earnnova.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rafetnoob731-coder/earnnova/issues"
+  },
+  "homepage": "https://github.com/rafetnoob731-coder/earnnova#readme"
+}

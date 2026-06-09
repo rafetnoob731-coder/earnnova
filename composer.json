@@ -1,0 +1,7 @@
+{
+  "name": "earnnova/app",
+  "description": "EARNNOVA - Premium Earning Platform",
+  "require": {
+    "php": ">=8.0"
+  }
+}

@@ -41,17 +41,19 @@
         // ============================================
         injectBottomNav() {
             if (document.querySelector('.mobile-bottom-nav')) return;
+            // Never inject on auth pages, homepage, or any page without sidebar
             if (document.body.classList.contains('no-mobile-nav')) return;
+            if (['login.php','register.php','index.php'].some(p => window.location.pathname.includes(p))) return;
 
             const currentPage = window.location.pathname.split('/').pop() || 'dashboard.php';
             
             const navItems = [
                 { icon: '🏠', label: 'Home', href: '/dashboard.php', id: 'dashboard' },
-                { icon: '📺', label: 'Earn', href: '/ads.php', id: 'ads' },
+                { icon: '📺', label: 'Watch', href: '/ads.php', id: 'ads' },
                 { icon: '⭐', label: 'Missions', href: '/missions.php', id: 'missions', center: true },
-                { icon: '👥', label: 'Refer', href: '/referral.php', id: 'referral' },
+                { icon: '👥', label: 'Referral', href: '/referral.php', id: 'referral' },
                 { icon: '👤', label: 'Profile', href: '/profile.php', id: 'profile' },
-            ];
+            };
 
             const nav = document.createElement('nav');
             nav.className = 'mobile-bottom-nav';

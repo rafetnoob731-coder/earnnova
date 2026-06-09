@@ -71,7 +71,7 @@
         }
     </style>
 </head>
-<body>
+<body class="<?= (isset($showSidebar) && !$showSidebar) ? 'no-mobile-nav' : '' ?>">
     <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
         <div class="loading-logo">E</div>
@@ -175,6 +175,16 @@
     <!-- Main Content Start -->
     <main class="main-content" style="<?= isset($showSidebar) && $showSidebar ? '' : 'margin-left:0; padding-top:24px;' ?>">
     
+    <?php if (isset($showSidebar) && !$showSidebar): ?>
+    <style>
+        /* Hide all navigation on auth/home pages */
+        .mobile-bottom-nav { display: none !important; }
+        .sidebar, .top-header { display: none !important; }
+        body.no-mobile-nav { padding-bottom: 0 !important; }
+        body.no-mobile-nav .main-content { margin-left: 0 !important; padding-top: 24px !important; }
+    </style>
+    <?php endif; ?>
+
     <!-- Live clock script -->
     <script>
     function updateLiveClock() {
